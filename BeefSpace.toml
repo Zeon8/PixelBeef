@@ -1,0 +1,7 @@
+FileVersion = 1
+Projects = {PixelBeef = {Path = "PixelBeef"}, SampleGame = {Path = "SampleGame"}, raylib-beef = {Path = "external/raylib-beef"}}
+Locked = ["raylib-beef"]
+ExtraPlatforms = ["Linux64"]
+
+[Workspace]
+StartupProject = "SampleGame"

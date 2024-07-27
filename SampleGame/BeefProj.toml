@@ -1,0 +1,8 @@
+FileVersion = 1
+Dependencies = {corlib = "*", PixelBeef = "*"}
+
+[Project]
+Name = "SampleGame"
+TargetType = "BeefGUIApplication"
+StartupObject = "TestGame.Program"
+DefaultNamespace = "TestGame"

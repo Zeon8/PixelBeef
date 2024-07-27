@@ -1,0 +1,51 @@
+FileVersion = 1
+Dependencies = {corlib = "*", corlib = "*", corlib = "*"}
+
+[Project]
+Name = "raylib-beef"
+TargetType = "BeefLib"
+StartupObject = "Program"
+
+[Configs.Debug.Win64]
+OtherLinkFlags = "$(LinkFlags) -libpath:\"$(ProjectDir)/dist/x64DLL/\""
+LibPaths = ["$(ProjectDir)/dist/x64DLL/raylib.lib"]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/x64DLL/*.dll\")"]
+
+[Configs.Debug.Win32]
+OtherLinkFlags = "$(LinkFlags) $(LinkFlags) -libpath:\"$(ProjectDir)/dist/x86DLL/\""
+LibPaths = ["$(ProjectDir)/dist/x86DLL/raylib.lib"]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/x86DLL/*.dll\")"]
+
+[Configs.Debug.Linux64]
+LibPaths = ["$(ProjectDir)/dist/x64DLL/libraylib.so.500"]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/x64DLL/libraylib.so.500\")"]
+
+[Configs.DebugStatic.Win64]
+OtherLinkFlags = "$(LinkFlags) -libpath:\"$(ProjectDir)/dist/x64/\""
+LibPaths = ["$(ProjectDir)/dist/x64/raylib.lib"]
+
+[Configs.DebugStatic.Win32]
+OtherLinkFlags = "$(LinkFlags) $(LinkFlags) -libpath:\"$(ProjectDir)/dist/x86/\""
+LibPaths = ["$(ProjectDir)/dist/x86/raylib.lib"]
+
+[Configs.Release.Win64]
+OtherLinkFlags = "$(LinkFlags) -libpath:\"$(ProjectDir)/dist/x64DLL/\""
+LibPaths = ["$(ProjectDir)/dist/x64DLL/raylib.lib"]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/x64DLL/*.dll\")"]
+
+[Configs.Release.Win32]
+OtherLinkFlags = "$(LinkFlags) $(LinkFlags) -libpath:\"$(ProjectDir)/dist/x86DLL/\""
+LibPaths = ["$(ProjectDir)/dist/x86DLL/raylib.lib"]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/x86DLL/*.dll\")"]
+
+[Configs.Release.Linux64]
+LibPaths = ["$(ProjectDir)/dist/x64DLL/libraylib.so.500"]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/x64DLL/libraylib.so.500\")"]
+
+[Configs.ReleaseStatic.Win64]
+OtherLinkFlags = "$(LinkFlags) -libpath:\"$(ProjectDir)/dist/x64/\""
+LibPaths = ["$(ProjectDir)/dist/x64/raylib.lib"]
+
+[Configs.ReleaseStatic.Win32]
+OtherLinkFlags = "$(LinkFlags) $(LinkFlags) -libpath:\"$(ProjectDir)/dist/x86/\""
+LibPaths = ["$(ProjectDir)/dist/x86/raylib.lib"]

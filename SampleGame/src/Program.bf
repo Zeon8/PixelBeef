@@ -15,14 +15,11 @@ class Program
 		game.Scene = scope Scene();
 
 		var texture = Raylib.LoadTexture("Assets/character.png");
-		var childEntity = new Entity(Vector2(100,100));
-		childEntity.Components.Add(new SpriteComponent(Sprite(texture, Rectangle(0,0,24,24))));
+		var sprite = Sprite(texture);
 
-		var entity = new Entity(Vector2(100,100));
+		var entity = new Player(sprite);
+		entity.Transform.Position = Vector2(200,200);
 		entity.Scene = game.Scene;
-		entity.Components.Add(new SpriteComponent(Sprite(texture, Rectangle(0,0,24,24))));
-		entity.Components.Add(new PlayerMovement(childEntity, texture));
-		childEntity.Get<TransformComponent>().Parent = entity.Get<TransformComponent>();
 
 		game.Launch();
 	}

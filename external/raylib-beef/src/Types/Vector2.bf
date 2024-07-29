@@ -128,7 +128,7 @@ namespace raylib_beef.Types
 
 		[Inline]
 		/// Normalize provided vector
-		public Vector2 Normalize(Vector2 v2)
+		public Vector2 Normalize()
 		{
 			return this * (1 / Length());
 		}

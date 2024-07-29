@@ -23,7 +23,7 @@ public class Scene
     internal void Update()
     {
 		while(_startEntities.Count > 0)
-			_startEntities.PopFront().Start();
+			_startEntities.PopFront().StartInternal();
 
 		for(var component in _startComponents)
 		{
@@ -35,7 +35,7 @@ public class Scene
 		}
 		
         for (var entity in Entities)
-            entity.Update();
+            entity.UpdateInternal();
 
 		while(_deleteEntities.Count > 0)
 			delete _deleteEntities.PopFront();
@@ -44,7 +44,7 @@ public class Scene
     internal void Draw()
     {
         for (var entity in Entities)
-            entity.Draw();
+            entity.DrawInternal();
     }
 
 	public void StartComponent(EntityComponent component)

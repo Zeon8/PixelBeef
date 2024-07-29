@@ -12,8 +12,6 @@ public class Entity
 
     public ObservableCollection<EntityComponent> Components { get; } = new .() ~ DeleteContainerAndItems!(_);
 
-    private readonly List<EntityComponent> _startComponents = new .() ~ delete _;
-
     public Scene Scene
     {
         get => this.FindRoot()._scene;
@@ -61,17 +59,35 @@ public class Entity
 			delete child.Entity;
 	}
 
-    internal void Start()
+    internal void StartInternal()
     {
+		Start();
+
 		for(EntityComponent component in Components)
 			Scene.StartComponent(component);
 
 		for (var child in Transform.Children)
-			child.Entity.Start();
+			child.Entity.StartInternal();
     }
 
-    internal void Draw()
+	internal void UpdateInternal()
+	{
+		Update();
+
+	    for (var component in Components)
+	    {
+	        if (component.IsEnabled)
+	            component.Update();
+	    }
+
+	    for (var child in Transform.Children)
+	        child.Entity.UpdateInternal();
+	}
+
+    internal void DrawInternal()
     {
+		Draw();
+
         for (var component in Components)
         {
             if(component.IsEnabled)
@@ -79,20 +95,12 @@ public class Entity
         }
 
         for (var child in Transform.Children)
-            child.Entity.Draw();
+            child.Entity.DrawInternal();
     }
 
-    internal void Update()
-    {
-        for (var component in Components)
-        {
-            if (component.IsEnabled)
-                component.Update();
-        }
-
-        for (var child in Transform.Children)
-            child.Entity.Update();
-    }
+	protected void Start(){}
+	protected void Update(){}
+	protected void Draw(){}
 
 	public T Get<T>() where T : EntityComponent
 	{

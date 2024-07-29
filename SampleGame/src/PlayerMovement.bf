@@ -4,42 +4,41 @@ using raylib_beef.Types;
 using raylib_beef.Enums;
 using PixelBeef.Core;
 using PixelBeef.Components;
+using System;
 namespace TestGame;
 
 class PlayerMovement : EntityComponent
 {
-	private Entity _child;
-	private Texture2D _texture;
+	private Sprite _sprite;
 
-	public this(Entity child, Texture2D texture)
+	public this(Sprite sprite)
 	{
-		_child = child;
-		_texture = texture;
+		_sprite = sprite;
 	}
 
     public override void Update()
     {
         if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
         {
-            Entity.Transform.Position -= Vector2.UnitY;
+            Entity.Transform.Position -= Entity.Transform.Up;
         }
         if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
         {
-            Entity.Transform.Position += Vector2.UnitY;
+            Entity.Transform.Position -= Entity.Transform.Down;
         }
         if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
         {
-            Entity.Transform.Position += Vector2.UnitX;
+            Entity.Transform.Rotation += 5f;
         }
         if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
         {
-            Entity.Transform.Position -= Vector2.UnitX;
+            Entity.Transform.Rotation -= 5f;
         }
 		if(Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE))
 		{
 			var entity = new Entity(Entity.Transform.Position);
 			entity.Scene = Entity.Scene;
-			entity.Components.Add(new SpriteComponent(Sprite(_texture, Rectangle(0,0,24, 24))));
+			entity.Components.Add(new SpriteComponent(_sprite));
 			entity.Components.Add(new TestComponent());
 		}
     }

@@ -5,42 +5,51 @@ using raylib_beef.Enums;
 using PixelBeef.Core;
 using PixelBeef.Components;
 using System;
-namespace TestGame;
+using Box2DBeef;
+namespace SampleGame;
 
 class PlayerMovement : EntityComponent
 {
 	private Sprite _sprite;
+	private PhysicBodyComponent _body;
 
 	public this(Sprite sprite)
 	{
 		_sprite = sprite;
 	}
 
+	public override void Start()
+	{
+		_body = Entity.Get<PhysicBodyComponent>();
+	}
+
     public override void Update()
     {
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
-        {
-            Entity.Transform.Position -= Entity.Transform.Up;
-        }
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
-        {
-            Entity.Transform.Position -= Entity.Transform.Down;
-        }
+		Vector2 velocity = _body.Velocity;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
         {
-            Entity.Transform.Rotation += 5f;
+			velocity.x = 10;
         }
         if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
         {
-            Entity.Transform.Rotation -= 5f;
+			velocity.x = -10;
         }
+		_body.Velocity = velocity;
+
 		if(Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE))
 		{
-			var entity = new Entity(Entity.Transform.Position);
-			entity.Scene = Entity.Scene;
+			var entity = new Entity();
 			entity.Components.Add(new SpriteComponent(_sprite));
 			entity.Components.Add(new TestComponent());
+			entity.Transform.Position = Entity.Transform.Position;
+			entity.Transform.Rotation = Entity.Transform.Rotation;
+			entity.Scene = Entity.Scene;
 		}
     }
+
+	public override void Draw()
+	{
+		Raylib.DrawText(scope $"Position: {Entity.Transform.Position}", 10, 60, 14, Color.WHITE);
+	}
 
 }

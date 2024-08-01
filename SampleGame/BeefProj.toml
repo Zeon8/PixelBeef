@@ -4,5 +4,7 @@ Dependencies = {corlib = "*", PixelBeef = "*"}
 [Project]
 Name = "SampleGame"
 TargetType = "BeefGUIApplication"
-StartupObject = "TestGame.Program"
-DefaultNamespace = "TestGame"
+StartupObject = "SampleGame.Program"
+
+[Configs.Debug.Win64]
+CLibType = "Dynamic"

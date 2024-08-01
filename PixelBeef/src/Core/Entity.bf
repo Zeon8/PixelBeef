@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using raylib_beef.Types;
 using PixelBeef.Components;
+using internal PixelBeef.Core;
 
 namespace PixelBeef.Core;
 
@@ -48,9 +49,11 @@ public class Entity
 		Components.Add(Transform);
     }
 
-    public this(Vector2 position) : this()
+    public this(Vector2 position = Vector2.Zero, float rotation = 0f, Vector2 scale = Vector2.Zero) : this()
     {
         Transform.Position = position;
+		Transform.Rotation = rotation;
+		Transform.Scale = scale;
     }
 
 	public ~this()
@@ -59,7 +62,7 @@ public class Entity
 			delete child.Entity;
 	}
 
-    internal void StartInternal()
+    internal void StartInternal(IGame game)
     {
 		Start();
 
@@ -67,7 +70,7 @@ public class Entity
 			Scene.StartComponent(component);
 
 		for (var child in Transform.Children)
-			child.Entity.StartInternal();
+			child.Entity.StartInternal(game);
     }
 
 	internal void UpdateInternal()
@@ -101,10 +104,18 @@ public class Entity
 	protected void Start(){}
 	protected void Update(){}
 	protected void Draw(){}
+}
 
-	public T Get<T>() where T : EntityComponent
+static
+{
+	public static void Add(this Entity entity, EntityComponent component)
 	{
-	    for (var component in Components)
+		entity.Components.Add(component);
+	}
+
+	public static T Get<T>(this Entity entity) where T : EntityComponent
+	{
+	    for (var component in entity.Components)
 	    {
 	        if (component is T)
 	            return (T)component;
@@ -112,16 +123,16 @@ public class Entity
 	    return null;
 	}
 
-	public Entity FindRoot()
+	public static Entity FindRoot(this Entity @this)
 	{
-		var entity = this;
+		var entity = @this;
 	    while (entity.Transform.Parent != null)
 	        entity = entity.Transform.Parent.Entity;
 	    return entity;
 	}
 
-	public void Destroy()
+	public static void Destroy(this Entity entity)
 	{
-		Scene.DeleteEntity(this);
+		entity.Scene.DeleteEntity(entity);
 	}
 }

@@ -1,8 +1,5 @@
 FileVersion = 1
-Dependencies = {corlib = "*", raylib-beef = "*"}
+Dependencies = {corlib = "*", raylib-beef = "*", Box2DBeef = "*"}
 
 [Project]
 Name = "PixelBeef"
-TargetType = "BeefLib"
-StartupObject = "TestEngine.Program"
-DefaultNamespace = "TestEngine"

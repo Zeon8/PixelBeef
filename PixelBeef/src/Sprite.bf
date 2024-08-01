@@ -13,21 +13,20 @@ namespace PixelBeef
 
 		public Vector2 Origin { get; }
 
-        public Color Tint { get; }
+        public Color Tint { get; set mut; } = Color.WHITE;
 
-		public this(Texture texture, Rectangle rect, Vector2 origin, Color tint = Color.WHITE)
+		public this(Texture texture, Rectangle rect, Vector2 origin)
 		{
 			Texture = texture;
 			Rect = rect;
 			Origin = origin;
-			Tint = tint;
 		}
 
-		public this(Texture texture, Rectangle rect, Color tint = Color.WHITE)
-			: this(texture, rect, Vector2(rect.width/2, rect.height / 2), tint){}
+		public this(Texture texture, Rectangle rect)
+			: this(texture, rect, Vector2(rect.width/2, rect.height / 2)){}
 
-		public this(Texture texture, Color tint = Color.WHITE)
-			: this(texture, Rectangle(0, 0, texture.width, texture.height), tint){}
+		public this(Texture texture)
+			: this(texture, Rectangle(0, 0, texture.width, texture.height)){}
 
     }
 }

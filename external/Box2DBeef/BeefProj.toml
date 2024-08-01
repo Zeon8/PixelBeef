@@ -1,0 +1,10 @@
+FileVersion = 1
+
+[Project]
+Name = "Box2DBeef"
+TargetType = "BeefLib"
+StartupObject = "Box2DBeef.Program"
+
+[Configs.Debug.Win64]
+LibPaths = ["$(ProjectDir)/dist/box2d.lib"]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/*.dll\")"]

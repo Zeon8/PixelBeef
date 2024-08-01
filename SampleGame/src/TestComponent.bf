@@ -1,7 +1,7 @@
 using PixelBeef.Core;
 using raylib_beef;
 using raylib_beef.Enums;
-namespace TestGame;
+namespace SampleGame;
 
 class TestComponent : EntityComponent
 {

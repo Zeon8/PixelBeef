@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using raylib_beef.Types;
+using PixelBeef.Components;
 using internal PixelBeef;
 
 namespace PixelBeef.Core;
@@ -8,9 +10,12 @@ public class Scene
 {
     public ObservableCollection<Entity> Entities { get; } = new .() ~ DeleteContainerAndItems!(_);
 
+	public CameraComponent Camera { get; set; }
+
+	private IGame _game;
 	private readonly Queue<Entity> _startEntities = new .() ~ delete _;
 	private readonly Queue<Entity> _deleteEntities = new .() ~ delete _;
-	private readonly List<EntityComponent> _startComponents = new .() ~ delete _;
+	private readonly Queue<EntityComponent> _startComponents = new .() ~ delete _;
 
 	public this()
 	{
@@ -20,19 +25,21 @@ public class Scene
 		});
 	}
 
+	internal void StartInternal(IGame game)
+	{
+		_game = game;
+		Start();
+	}
+
+	public virtual void Start(){}
+
     internal void Update()
     {
 		while(_startEntities.Count > 0)
-			_startEntities.PopFront().StartInternal();
+			_startEntities.PopFront().StartInternal(_game);
 
-		for(var component in _startComponents)
-		{
-			if(component.IsEnabled)
-			{
-				component.Start();
-				_startComponents.Remove(component);
-			}
-		}
+		while(_startComponents.Count > 0)
+			_startComponents.PopFront().StartInternal(_game);
 		
         for (var entity in Entities)
             entity.UpdateInternal();

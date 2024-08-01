@@ -13,10 +13,11 @@ public class SpriteComponent : EntityComponent
     {
 		Vector2 position = Entity.Transform.Position;
 		Vector2 scale = Entity.Transform.Scale;
+		
 		float rotation = Entity.Transform.Rotation;
 
 		// Converts world position to screen position 
-		var destinationRect = Rectangle(position.x, position.y,
+		var destinationRect = Rectangle(position.x * Sprite.Rect.width, -position.y * Sprite.Rect.width,
 			scale.x * Sprite.Rect.width, scale.y * Sprite.Rect.height);
         Raylib.DrawTexturePro(Sprite.Texture, Sprite.Rect, destinationRect, Sprite.Origin * scale, rotation, Sprite.Tint);
     }
